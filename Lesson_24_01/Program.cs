@@ -18,21 +18,62 @@ using System.Threading.Tasks;
 // - Завжди буде різний метод для всіх використань (в кожного об'єкта різний)
 // - Викликаються тільки в звичайних методах або через створення Об'єкту
 
-// Створити клас Rectangle,
 
-// Буде мати метод  double squere (int a, int b) // Рахує площадь
-// Буде мати метод  print (int a, int b) виводити на екран ці значення в такому форматі 
-// Сторона А = 15 см., Сторона Б = 12 см.
-// Створити статичний метод draw(int a, int b)
-// Буде малювати прямокутник з зірок (3, 2)
-// 
-//  ****
-//  *  *
-//  *  *
-//  *  *
-//  ****
+// public   // Доступний всюди
+// private  // Доступний тільки в цьому ж класі
+// protected  // Доступний в цьому ж класі і в класі дочірньому
 
-// Створете метод, який приймає в собі список імен, знайти кількість імен, які починаються на Голосну літеру (5 імен в списку)
+class Human
+{
+    protected string name;
+    public int age;
+
+    public Human(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+
+    public virtual void doWork()
+    {
+        Console.WriteLine("Something");
+    }
+}
+
+class Student : Human
+{
+    public Student(string name, int age) : base(name, age)
+    {
+        this.name = name;
+    }
+
+    public string Name
+    {
+        get { return name; }
+    }
+
+    public override void doWork()
+    {
+        Console.WriteLine("Study...");
+    }
+
+}
+
+class Worker : Human
+{
+    public string job;
+    public Worker(string name, int age, string job) : base(name, age)
+    {
+        this.job = job;
+    }
+}
+
+class LazyWorker : Worker
+{
+    public LazyWorker(string name, int age, string job) : base(name, age, job)
+    {
+    }
+}
 
 
 
@@ -43,202 +84,198 @@ namespace Lesson_24_01
 
         static void Main(string[] args)
         {
-            Student student1 = new Student("Kolya", 15);
-            Student student2 = new Student();
-            Student student3 = new Student();
-            Student student4 = new Student();
-            Student student5 = new Student();
-            Console.WriteLine($"{student1.name} {student1.age}");
+            /* Student student = new Student("Lord", 155);
 
-            student1.name = "Petya";
-            //student2.name = "Petya";
-            student1.age = 18;
-            //student2.age = 17;
+              System.Console.WriteLine($" Name: {student.Name} {student.age}");
 
-            Console.WriteLine($"{student1.name} {student1.age}");
-            Console.WriteLine("**********************");
+              Worker worker = new Worker("Evil", 35, "ENginear");
 
-            Console.WriteLine($"{student2.name} {student2.age}");
-            Console.WriteLine($"{student3.name} {student3.age}");
-            Console.WriteLine($"{student4.name} {student4.age}");
-            Console.WriteLine($"{student5.name} {student5.age}");
-            Console.WriteLine(student1);
-            Console.WriteLine(student2.name);
-            Console.WriteLine("**********************");
+              Human stud = new Student("Devil", 15);
+              Human w = new Worker("1", 1,"ENginear");
 
-            Bus bus =  new Bus("Mersedes", 355, 7, "Black", "Mykola Vickorovich");
-            //Bus bus = new Bus();
-            bus.Number = 15;
-            bus.show();
+              Human w1 = new LazyWorker("4", 4, "ENginear");
 
-            //bus.name = "Test";
-            //bus.getName();
+              //worker.doWork();
 
-            //bus.number = 35;
+              stud.doWork();
+              // student.doWork();
 
-            bus.show();
-            bus.addStudents(student1);
-            bus.addStudents(student2);
-            bus.addStudents(student3);
-            bus.addStudents(student4);
-            bus.addStudents(student5);
-            bus.showFreeSeats();
-            bus.removeStudent(student2);
-            bus.showFreeSeats();
+              
+              25000000000
+              25_000_000_000
 
+              print(new Student("L", 21));
+              print(new Worker("L", 21, "ENginear"));
+              print(w1);
+  */
+              Shop shop = new Shop();
+
+            Device d = new Laptop("Lenovo", 35_000.25f, "Plastic", "White", "512GB", "16GB", "4GB", "IPS");
+
+            shop.addDevice(new PC("Apple", 25_000f, "Plastic", "Black", "256GB", "16GB", "4GB"));
+            shop.addDevice(d);
+            shop.addDevice(new Phone("Pixel", 26_000f, "Plastic", "Black", "64GB", "32px", "7 inch"));
+            shop.addDevice(new Phone("Apple", 23_000f, "Plastic", "RED", "256GB", "64px", "7 inch"));
+            shop.addDevice(new TV("Samsung", 25_000f, "Aluminiy", "Black", "7 inch", "IPS"));
+            //shop.addDevice(new TV("IPS", , "Aluminiy", "Black", "7 inch", "IPS"));
+             
+            shop.showDevices();
+            shop.deleteDevice(d);
+            Console.WriteLine("==================");
+            shop.showDevices();
+            Console.WriteLine("==================");
+            shop.showDevices();
 
         }
     }
 }
 
-// Створити клас Bus
-// Прописати властивості назва, номер автобусу, кількість місць, Колір, Водій (текстове поле), Список студентів, кількість вільних місць
-// Створити 2 конструктора Один пустий, а інший з параметрами
-// Створити метод Який виводить Дані Автобуса
-// // Створити метод заповнення автобусу студентами в залежності від кількості місць
-// // Створити метод звільнення автобусу студентами 
-// Створити метод, який виводить кількість вільних місць
 
-// 
-// static 
-
-// Class 
-// public private
-
-class Bus
+class Device
 {
-    private string name;
-    
-    private int number;
+    protected string name;
+    protected float price;
+    protected string material;
+    protected string color;
 
-    public int Number
-    {
-        private get { return number; }
-
-        set { number = value + 1; }
-    }
-
-    public int totalSeats;
-    public string color;
-    public string driver;
-
-    List<Student> students = new List<Student>();
-    public int freeSeats;
-
-
-    public string getName()
-    {
-        return name;
-    }
-
-    public void setName(string name)
+    public Device(string name, float price, string material, string color)
     {
         this.name = name;
-    }
-
-    public Bus()
-    {
-
-    }
-
-    public Bus(string name, int number, int totalSeats, string color, string driver)
-    {
-        this.name = name;
-        this.number = number;
-        this.totalSeats = totalSeats;
+        this.price = price;
+        this.material = material;
         this.color = color;
-        this.driver = driver;
-        this.freeSeats = totalSeats;
     }
 
-    public void show()
+    public virtual void display()
     {
-        Console.WriteLine($"Bus {name} #{number} {color} color, with {totalSeats} seats, on drive {driver}");
-    }
-
-    public void addStudents(Student student)
-    {
-        if (freeSeats > 0)
-        {
-            students.Add(student);
-            freeSeats--;
-        }
-        else
-        {
-            Console.WriteLine("Not more seats");
-        }
-    }
-
-    public void removeStudent(Student student)
-    {
-        students.Remove(student);
-        if (freeSeats < totalSeats)
-        {
-            freeSeats++;
-        }
-    }
-
-    public void remStud(int id)
-    {
-        foreach (Student student in students)
-        {
-            if (student.id == id)
-            {
-                students.Remove(student);
-            }
-        }
-
-        // [0, 1, 2, 3]
-       
-        // [0, 1, 3]
-        // [0, 1, 2, 3]
-
-
-        // i == [0]
-
-        for (int i = 0; i < students.Count; i++)
-        {   
-            if(students[i].id == id)
-            {
-                students.RemoveAt(i);
-            }
-        }
-
-    }
-
-    public void showFreeSeats()
-    {
-        Console.WriteLine($"Seat left: {freeSeats}");
+        Console.WriteLine($"{name} {price} {material} {color}");
     }
 }
 
-class Student
+class Computer : Device { 
+    protected string hardware;
+    protected string memory;
+    protected string videoCart;
+
+    public Computer(string name, float price, string material, string color, string hardware, string memory, string videoCart) : base(name, price, material, color)
+    {
+        this.hardware = hardware;
+        this.memory = memory;
+        this.videoCart = videoCart;
+    }
+
+    public override void display()
+    {
+        base.display();
+        Console.WriteLine($"{hardware} {memory} {videoCart}");
+    }
+}
+
+class Phone: Device
 {
-    public int id = 0;
-    public string name;
-    public int age;
-//    public List<Student> students;
-    public Student(string name, int age)
-    {
-        this.name = name;
-        this.age = age;
-    }
+    protected string memory;
+    protected string camera;
+    protected string diagonal;
 
-    public Student()
+    public Phone(string name, float price, string material, string color, string memory, string camera, string diagonal) : base(name, price, material, color)
     {
-        name = "Vasya";
-        age = 12;
+        this.memory = memory;
+        this.camera = camera;
+        this.diagonal = diagonal;
+    }
+    public override void display()
+    {
+        base.display();
+        Console.WriteLine($"{memory} {camera} {diagonal}");
     }
 }
 
+class TV : Device
+{
+    protected string diagonal;
+    protected string type_Matrix;
 
+    public TV(string name, float price, string material, string color ,string diagonal, string type_Matrix) : base(name, price, material, color)
+    {
+        this.type_Matrix = type_Matrix;
+        this.diagonal = diagonal;
+    }
+    public override void display()
+    {
+        base.display();
+        Console.WriteLine($"{diagonal} {type_Matrix}");
+    }
+}
 
+class PC : Computer
+{
+    public PC(string name, float price, string material, string color, string hardware, string memory, string videoCart) : base(name, price, material, color, hardware, memory, videoCart)
+    {
+    }
+
+}
+
+class Laptop : Computer
+{
+    protected string type_Matrix;
+    public Laptop(string name, float price, string material, string color, string hardware, string memory, string videoCart, string type_Matrix) 
+        : base(name, price, material, color, hardware, memory, videoCart)
+    {
+       this.type_Matrix = type_Matrix;
+    }
+
+    public override void display()
+    {
+        base.display();
+        Console.WriteLine($"{type_Matrix}");
+
+    }
+}
+
+class Shop
+{
+    private List<Device> devices = new List<Device>();
+
+   public void addDevice(Device device)
+    {
+        devices.Add(device);
+    }
+
+    public void showDevices()
+    {
+        foreach (Device device in devices)
+        {
+            device.display();
+            Console.WriteLine("**********************************");
+        }
+    }
+
+    public void deleteDevice(Device device)
+    {
+        if (devices.Contains(device) && devices.Count > 0)
+        {
+            devices.Remove(device);
+        }
+    }
+}
 
 
 // Наслідування
-// 
+// Device Назва, ціна, Матеріал, колір
 
-// i0j0 i0j1 i0j2 i0j3 
-// i1j0 i1j1 i1j2 i1j3
-// i2j0 i2j1 i2j2 i2j3
-// i3j0 i3j1 i3j2 i3j3
+// Дочірні класи .. Computer (Накопичувач, Пам'ять(ОЗУ), Відеокарта), Phone (Пам'ять, Камера, діагональ), TV(Діагональ, тип_Матриці)
+
+// Дочірні класи від Computer - Laptop (тип_матриці), PC 
+
+// void display - виводити дані всіх класів
+
+// Створити клас Shop (), але в ньому буде список Девайсів List<Device>
+// Написати функцію, яка додає в список Девайс,
+// Написати функцію, яка виводить список девайсів на екран // ******************************
+
+// Мейн - Створити 1 Лептоп, 1 ПС, 2 Телефони, 1 телевізор
+// Додати їх в список, і вивести цей список на екран
+
+/*public LazyWorker(string name, int age) : base(name, age)
+{
+}*/
