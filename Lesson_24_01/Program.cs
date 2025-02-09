@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
 
 
 // Статичні методи (функції)
@@ -118,15 +118,59 @@ namespace Lesson_24_01
             shop.addDevice(new Phone("Apple", 23_000f, "Plastic", "RED", "256GB", "64px", "7 inch"));
             shop.addDevice(new TV("Samsung", 25_000f, "Aluminiy", "Black", "7 inch", "IPS"));
             //shop.addDevice(new TV("IPS", , "Aluminiy", "Black", "7 inch", "IPS"));
-             
+             /*
             shop.showDevices();
             shop.deleteDevice(d);
             Console.WriteLine("==================");
             shop.showDevices();
             Console.WriteLine("==================");
-            shop.showDevices();
+            shop.showDevices();*/
 
-        }
+            
+            // 1 Виводиться на екран Текст
+
+            // 1.Додати Девайс
+            // 2.Видалити девайс
+            // 3.Показати Девайс
+
+            //Користувач вводить число 1-3 І виводиться функціонал,
+            //якщо 1 то Додається девайс (TV) (Всі дані телевізора вводить користувач з консолі)
+            // Якщо 2 то видаляється Дивайс 
+            // Якщо 3 то Показується Список дивайсів
+            // Реалізувати в класі Shop метод GetDeviceByName
+            // ОБРОБИТИ Правильність вводу користувачем Числел
+            // Опрацювати видалення, якщо девайса нема (Можливо custom exception)
+            // Записати весь список в файл
+            /*
+             *
+                          string name = Console.ReadLine();
+                         float price = Console.ReadLine();
+                         string material =Console.ReadLine();
+                         string color;*/
+
+        
+          /*  int a = 2;
+            char b = 'f';
+            switch (a)
+            {
+                case 2:
+                    try
+                    {
+                        string s = Console.ReadLine();
+                        Device divice = shop.GetDeviceByName(s);
+                        shop.deleteDevice(divice);
+                       
+                    } catch(Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    break;
+            }*/
+
+            shop.WriteToFile();
+
+
+    }
     }
 }
 
@@ -138,6 +182,10 @@ class Device
     protected string material;
     protected string color;
 
+    public string Name
+    {
+        get { return name; }
+    }
     public Device(string name, float price, string material, string color)
     {
         this.name = name;
@@ -149,6 +197,10 @@ class Device
     public virtual void display()
     {
         Console.WriteLine($"{name} {price} {material} {color}");
+    }
+    public override string ToString()
+    {
+        return $"{name} {price} {material} {color}";
     }
 }
 
@@ -241,8 +293,10 @@ class Shop
         devices.Add(device);
     }
 
+
     public void showDevices()
     {
+
         foreach (Device device in devices)
         {
             device.display();
@@ -250,12 +304,35 @@ class Shop
         }
     }
 
+    public Device GetDeviceByName(string name)
+    {
+        foreach (Device device in devices)
+        {
+            if (device.Name == name)
+            {
+                return device;
+            }
+        }
+        throw new Exception();
+    }
+
+
     public void deleteDevice(Device device)
     {
         if (devices.Contains(device) && devices.Count > 0)
         {
             devices.Remove(device);
         }
+    }
+
+    public void WriteToFile()
+    {
+        string write = "";
+        foreach (Device device in devices)
+        {
+            write += device.ToString() + " ";
+        }
+        File.WriteAllText("text.txt", write);
     }
 }
 
